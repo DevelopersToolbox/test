@@ -1,6 +1,13 @@
 name: base
 on:
   push:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - master
+      - main
     
 jobs:
   awesomebot:
