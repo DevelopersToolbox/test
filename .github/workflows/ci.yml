@@ -23,7 +23,8 @@ on:
       - '**/*.md'
   pull_request:
     branches:
-      - $default-branch
+      - master
+      - main
     paths-ignore:
       - '**/*.md'
     
