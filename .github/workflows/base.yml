@@ -18,8 +18,7 @@ on:
       - '**'
   pull_request:
     branches:
-      - master
-      - main
+      - $default-branch
     
 jobs:
   awesomebot:
