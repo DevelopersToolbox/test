@@ -3,19 +3,35 @@ on:
   push:
 
 jobs:
-  set:
+  alpine-set:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{steps.list_dirs.outputs.matrix}}
     steps:
       - uses: actions/checkout@v2
       - id: list_dirs
-        run: echo "::set-output name=matrix::$(ls|jq -cnR '[inputs | select(length>0)]')"
-  get:
+        run: echo "::set-output name=matrix::$(ls Dockerfiles/alpine/ | sort -n | jq -cnR '[inputs | select(length>0)]')"
+  alpine:
     runs-on: ubuntu-latest
-    needs: set
+    needs: alpine-set
     strategy:
       matrix:
-        subdir: ${{fromJson(needs.set.outputs.matrix)}}
+        subdir: ${{fromJson(needs.alpine-set.outputs.matrix)}}
+    steps:
+      - run: echo ${{ matrix.subdir }}
+  debian-set:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{steps.list_dirs.outputs.matrix}}
+    steps:
+      - uses: actions/checkout@v2
+      - id: list_dirs
+        run: echo "::set-output name=matrix::$(ls Dockerfiles/debian/ | sort -n | jq -cnR '[inputs | select(length>0)]')"
+  alpine:
+    runs-on: ubuntu-latest
+    needs: debian-set
+    strategy:
+      matrix:
+        subdir: ${{fromJson(needs.debian-set.outputs.matrix)}}
     steps:
       - run: echo ${{ matrix.subdir }}
