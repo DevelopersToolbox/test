@@ -20,4 +20,4 @@ jobs:
     needs: get-version
     runs-on: ubuntu-latest
     steps:
-      run: echo echo ${{needs.get-version.outputs.version}}
+      - run: echo echo ${{needs.get-version.outputs.version}}
