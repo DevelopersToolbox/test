@@ -19,10 +19,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the current tag
-        id: get_tag
-        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+      - name: Get Current Release
+        id: get_current_release
+        uses: joutvhu/get-release@v1
+        with:
+          latest: true
+#      - name: Get the current tag
+#        id: get_tag
+#        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: ${{ steps.get_tag.outputs.tag }}
+          ref: ${{ steps.get_current_release.outputs.tag_name }}
