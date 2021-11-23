@@ -1,6 +1,17 @@
-#
-# This is a comment
-#
+# -------------------------------------------------------------------------------- #
+# Description                                                                      #
+# -------------------------------------------------------------------------------- #
+# This is the ci (continuous integration) pipeline and should contain all the      #
+# tasks that need to be run whenever a push is made.                               #
+#                                                                                  #
+# Trigger Rules:                                                                   #
+#    push: all branches, excluding all tags and *.md files.                        #
+#    pull requests: master/main (target only), exclude *.md files.                 #
+#                                                                                  #
+# Runs From:                                                                       #
+#    Runs from the latest commit.                                                  #
+# -------------------------------------------------------------------------------- #
+
 name: ci
 on:
   push:
@@ -9,13 +20,13 @@ on:
     tags-ignore:
       - '**'
     paths-ignore:
-      - "*.md"
+      - '**/*.md'
   pull_request:
     branches:
       - master
       - main
     paths-ignore:
-      - "*.md"
+      - '**/*.md'
     
 jobs:
   shellcheck:

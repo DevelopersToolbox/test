@@ -1,3 +1,16 @@
+# -------------------------------------------------------------------------------- #
+# Description                                                                      #
+# -------------------------------------------------------------------------------- #
+# This is the base pipeline and contains the base jobs that should always be run.  #
+#                                                                                  #
+# Trigger Rules:                                                                   #
+#    push: all branches.                                                           #
+#    pull requests: master/main (target only).                                     #
+#                                                                                  #
+# Runs From:                                                                       #
+#    Runs from the latest commit.                                                  #
+# -------------------------------------------------------------------------------- #
+
 name: base
 on:
   push:

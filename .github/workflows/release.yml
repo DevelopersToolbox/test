@@ -1,12 +1,27 @@
+# -------------------------------------------------------------------------------- #
+# Description                                                                      #
+# -------------------------------------------------------------------------------- #
+# This is the release pipeline and should contain all the taks that need to be run #
+# as part of a release.                                                            #
+#                                                                                  #
+# Trigger Rules:                                                                   #
+#    push: master or main and only when a tag is set.                              #
+#                                                                                  #
+# Runs From:                                                                       #
+#    Runs from the latest tag.                                                     #
+# -------------------------------------------------------------------------------- #
+
 name: release
 on:
   push:
+    branches:
+      - master
+      - main
     tags: 'v*'
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Get tag name
         id: get_tag_name
