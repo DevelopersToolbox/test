@@ -24,6 +24,8 @@ jobs:
         uses: joutvhu/get-release@v1
         with:
           latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Get the current tag
 #        id: get_tag
 #        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
