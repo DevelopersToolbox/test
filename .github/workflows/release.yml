@@ -17,7 +17,7 @@ on:
 
 jobs:
   test:
-    if: ${{ always() && format('refs/heads/{0}', ) == github.ref }}
+    if: ${{ format('refs/heads/{0}', github.event.repository.default_branch) == github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Get tag name
