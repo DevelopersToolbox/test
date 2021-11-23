@@ -1,0 +1,23 @@
+# -------------------------------------------------------------------------------- #
+# Description                                                                      #
+# -------------------------------------------------------------------------------- #
+# This is the release pipeline and should contain all the taks that need to be run #
+# as part of a release.                                                            #
+#                                                                                  #
+# Trigger Rules:                                                                   #
+#    push: master or main and only when a tag is set.                              #
+#                                                                                  #
+# Runs From:                                                                       #
+#    Runs from the latest tag.                                                     #
+# -------------------------------------------------------------------------------- #
+name: cron2
+on: 
+  schedule:
+  - cron: '*/5 * * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
