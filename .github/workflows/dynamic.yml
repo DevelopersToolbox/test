@@ -2,6 +2,10 @@ name: dynamic
 on: 
   push:
 
+env:
+   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   create-matrices:
     runs-on: ubuntu-latest
@@ -35,17 +39,14 @@ jobs:
     steps:
       - name: Build Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
-  slack-workflow-status:
-    if: always()
-    name: Slack Post Workflow Notification
+  slackNotification:
+    name: Slack Notification
     needs:
       - alpine
       - debian
     runs-on: ubuntu-latest
     steps:
-      - name: Slack Post Workflow Notification
-        uses: Gamesight/slack-workflow-status@master
-        with:
-          include_jobs: true
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_COLOR: ${{ job.status }}
