@@ -17,3 +17,5 @@ jobs:
     strategy:
       matrix:
         subdir: ${{fromJson(needs.set.outputs.matrix)}}
+    steps:
+      - run: echo ${{ matrix.subdir }}
