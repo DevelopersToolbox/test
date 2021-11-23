@@ -6,8 +6,8 @@ jobs:
   create-matrices:
     runs-on: ubuntu-latest
     outputs:
-      alpine-versions: ${{steps.alpine.outputs.matrix}}
-      debian-versions: ${{steps.debian.outputs.matrix}}
+      alpine-versions: ${{steps.alpine.outputs.alpine-versions}}
+      debian-versions: ${{steps.debian.outputs.debian-versions}}
     steps:
       - uses: actions/checkout@v2
       - id: alpine
