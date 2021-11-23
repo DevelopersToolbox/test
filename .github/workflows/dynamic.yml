@@ -35,3 +35,17 @@ jobs:
     steps:
       - name: Build Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
+  slack-workflow-status:
+    if: always()
+    name: Slack Post Workflow Notification
+    needs:
+      - alpine
+      - debian
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Post Workflow Notification
+        uses: Gamesight/slack-workflow-status@master
+        with:
+          include_jobs: true
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
