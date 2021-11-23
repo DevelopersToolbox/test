@@ -14,7 +14,7 @@ jobs:
           webhook-url: ${{secrets.SLACK_WEBHOOK_URL}}
   create-matrices:
     runs-on: ubuntu-latest
-    needs: slack-message-start
+#    needs: slack-message-start
     outputs:
       alpine-versions: ${{steps.alpine.outputs.alpine-versions}}
       debian-versions: ${{steps.debian.outputs.debian-versions}}
@@ -50,6 +50,7 @@ jobs:
     if: always()
     needs:
       # note: list *all* jobs defined above
+      - slack-message-start
       - alpine
       - debian
     runs-on: ubuntu-latest
