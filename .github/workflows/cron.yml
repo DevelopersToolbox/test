@@ -11,9 +11,9 @@
 #    Runs from the latest tag.                                                     #
 # -------------------------------------------------------------------------------- #
 name: cron
-on:
+on: 
   schedule:
-    - cron: "* * * * *"
+  - cron: '*/5 * * * *'
 
 jobs:
   test:
