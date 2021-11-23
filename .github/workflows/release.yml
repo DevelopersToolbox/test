@@ -25,7 +25,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.branch-name.outputs.tag }}
-
+      - name: Check default branch
+        if: steps.branch-name.outputs.is_default != 'true'
+        uses: actions/github-script@v3
+        with:
+          script: core.setFailed('Tag not on default branch')
 
 #jobs:
 #  test:
