@@ -3,36 +3,32 @@ on:
   push:
 
 jobs:
-  alpine-set:
+  create-matrices:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{steps.list_dirs.outputs.matrix}}
+      alpine-versions: ${{steps.alpine.outputs.matrix}}
+      debian-versions: ${{steps.debian.outputs.matrix}}
     steps:
       - uses: actions/checkout@v2
-      - id: list_dirs
-        run: echo "::set-output name=matrix::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
-      - run: ls -l
+      - id: alpine
+        run: echo "::set-output name=alpine-versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      - id: debian
+        run: echo "::set-output name=debian-versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
+
+
   alpine:
     runs-on: ubuntu-latest
-    needs: alpine-set
+    needs: create-matrices
     strategy:
       matrix:
-        subdir: ${{fromJson(needs.alpine-set.outputs.matrix)}}
+        version: ${{fromJson(needs.create-matrices.outputs.alpine-versions)}}
     steps:
-      - run: echo ${{ matrix.subdir }}
-  debian-set:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{steps.list_dirs.outputs.matrix}}
-    steps:
-      - uses: actions/checkout@v2
-      - id: list_dirs
-        run: echo "::set-output name=matrix::$(ls Dockerfiles|jq -cnR '[inputs | select(length>0)]')"
+      - run: echo ${{ matrix.version }}
   debian:
     runs-on: ubuntu-latest
-    needs: debian-set
+    needs: create-matrices
     strategy:
-      matrix:
-        subdir: ${{fromJson(needs.debian-set.outputs.matrix)}}
+      version:
+        subdir: ${{fromJson(needs.create-matrices.outputs.debian-versions)}}
     steps:
-      - run: echo ${{ matrix.subdir }}
+      - run: echo ${{ matrix.version }}
