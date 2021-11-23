@@ -1,10 +1,6 @@
-name: dynamic
+name: dynamic2
 on: 
   push:
-
-env:
-  SLACK_CHANNEL: '#github-actions'
-  SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
 
 jobs:
   slack-message-start:
@@ -14,8 +10,8 @@ jobs:
       - name: Slack message
         uses: magnetikonline/action-slack-workflow-start-finish@v1
         with:
-          channel: ${{env.SLACK_CHANNEL}}
-          webhook-url: ${{env.SLACK_WEBHOOK_URL}}
+          channel: '#github-actions'
+          webhook-url: ${{secrets.SLACK_WEBHOOK_URL}}
   create-matrices:
     runs-on: ubuntu-latest
     outputs:
@@ -62,19 +58,18 @@ jobs:
     steps:
       - name: Build Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
-  slack-message-finish:
-    name: Slack message finish
+  slack-workflow-status:
     if: always()
+    name: Slack Post Workflow Notification
     needs:
-      - slack-message-start
       - alpine
       - centos
       - debian
     runs-on: ubuntu-latest
     steps:
-      - name: Slack message
-        uses: magnetikonline/action-slack-workflow-start-finish@v1
+      - name: Slack Post Workflow Notification
+        uses: Gamesight/slack-workflow-status@master
         with:
-          channel: ${{env.SLACK_CHANNEL}}
-          webhook-url: ${{env.SLACK_WEBHOOK_URL}}
-          result: ${{ join(needs.*.result,'|') }}
+          include_jobs: true
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
