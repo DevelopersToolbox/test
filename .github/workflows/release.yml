@@ -31,4 +31,4 @@ jobs:
         run: echo "::set-output name=BRANCH::${GITHUB_REF#refs\/heads\//}"
       - name: Get the github ref
         shell: bash
-        run: echo "${steps.get_branch_name.outputs.BRANCH}"
+        run: echo "${{ steps.get_branch_name.outputs.BRANCH }}"
