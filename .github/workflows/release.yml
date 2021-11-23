@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Exit if not on master branch
-        if: endsWith(github.ref, $default-branch) == false
+        if: endsWith(github.ref, "$default-branch") == false
         run: exit -1
       - name: Get tag name
         id: get_tag_name

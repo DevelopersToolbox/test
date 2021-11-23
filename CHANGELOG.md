@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 
 This changelog was automatically generated using [Caretaker](https://github.com/DevelopersToolbox/caretaker) by [Wolf Software](https://github.com/WolfSoftware)
 
-### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.1...HEAD)
+### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.2...HEAD)
 
 - update [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+### [v0.1.1](https://github.com/DevelopersToolbox/test/compare/v0.1.0...v0.1.1)
+
+> Released on November, 23rd 2021
+
+- update [`[9d5e901]`](https://github.com/DevelopersToolbox/test/commit/9d5e901332a1b82dbf9ece3880d4b3dae1a70c31)
 
 - branch test [`[85ad99c]`](https://github.com/DevelopersToolbox/test/commit/85ad99c2c08630172969a6f616743599c2881bc6)
 
