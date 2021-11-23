@@ -1,0 +1,51 @@
+name: dynamic-core
+on: 
+  push:
+
+jobs:
+  create-matrices:
+    runs-on: ubuntu-latest
+    outputs:
+      alpine-versions: ${{steps.alpine.outputs.versions}}
+      centos-versions: ${{steps.centos.outputs.versions}}
+      debian-versions: ${{steps.debian.outputs.versions}}
+    steps:
+      - uses: actions/checkout@v2
+      - id: alpine
+        run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      - id: centos
+        run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      - id: debian
+        run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
+  alpine:
+    runs-on: ubuntu-latest
+    needs: create-matrices
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(needs.create-matrices.outputs.alpine-versions)}}
+    name: Build Test on Alpine Linux ${{ matrix.version }}
+    steps:
+      - run: echo ${{ matrix.version }}
+  centos:
+    runs-on: ubuntu-latest
+    needs: create-matrices
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(needs.create-matrices.outputs.centos-versions)}}
+    name: Build Test on Centos ${{ matrix.version }}
+    steps:
+      - name: Build Test on Centos ${{ matrix.version }}
+        run: echo ${{ matrix.version }}
+  debian:
+    runs-on: ubuntu-latest
+    needs: create-matrices
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(needs.create-matrices.outputs.debian-versions)}}
+    name: Build Test on Debian ${{ matrix.version }}
+    steps:
+      - name: Build Test on Debian ${{ matrix.version }}
+        run: echo ${{ matrix.version }}
