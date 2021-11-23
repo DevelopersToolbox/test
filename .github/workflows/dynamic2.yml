@@ -3,15 +3,6 @@ on:
   push:
 
 jobs:
-  slack-message-start:
-    name: Slack message start
-    runs-on: ubuntu-latest
-    steps:
-      - name: Slack message
-        uses: magnetikonline/action-slack-workflow-start-finish@v1
-        with:
-          channel: '#github-actions'
-          webhook-url: ${{secrets.SLACK_WEBHOOK_URL}}
   create-matrices:
     runs-on: ubuntu-latest
     outputs:
