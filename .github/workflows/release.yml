@@ -26,8 +26,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ steps.get_tag.outputs.tag }}
-      - name: Check default branch
+      - name: Get current branch
         uses: nelonoel/branch-name@v1.0.1
+      - name: Check current branch
         if: ${{ github.event.repository.default_branch != env.BRANCH_NAME }}
         uses: actions/github-script@v3
         with:
