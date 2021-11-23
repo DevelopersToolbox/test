@@ -1,5 +1,7 @@
+#
+# This is a comment
+#
 name: ci
-description: Run all of the standard jobs required as part of the CI workflow
 on:
   push:
     branches:
