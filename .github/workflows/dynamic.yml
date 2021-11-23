@@ -2,11 +2,15 @@ name: dynamic
 on: 
   push:
 
-env:
-   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 jobs:
+  slack-message-start:
+    name: Slack message start
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack message
+        uses: magnetikonline/action-slack-workflow-start-finish@v1
+        with:
+          webhook-url: ${{secrets.SLACK_WEBHOOK_URL}}
   create-matrices:
     runs-on: ubuntu-latest
     outputs:
@@ -39,14 +43,18 @@ jobs:
     steps:
       - name: Build Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
-  slackNotification:
-    name: Slack Notification
+  slack-message-finish:
+    name: Slack message finish
+    if: always()
     needs:
+      # note: list *all* jobs defined above
+      - slack-message-start
       - alpine
       - debian
     runs-on: ubuntu-latest
     steps:
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_COLOR: ${{ job.status }}
+      - name: Slack message
+        uses: magnetikonline/action-slack-workflow-start-finish@v1
+        with:
+          result: ${{ join(needs.*.result,'|') }}
+          webhook-url: ${{secrets.SLACK_WEBHOOK_URL}}
