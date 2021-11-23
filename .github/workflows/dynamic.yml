@@ -1,0 +1,16 @@
+jobs:
+  set:
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{steps.list_dirs.outputs.matrix}}
+    steps:
+      - uses: actions/checkout@v2
+      - id: list_dirs
+        run: echo "::set-output name=matrix::$(ls|jq -cnR '[inputs | select(length>0)]')"
+
+  get:
+    runs-on: ubuntu-20.04
+    needs: set
+    strategy:
+      matrix:
+        subdir: ${{fromJson(needs.set.outputs.matrix)}}
