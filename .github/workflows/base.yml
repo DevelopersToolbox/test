@@ -1,4 +1,5 @@
 name: base
+description: A base action to link check and run yaml lint
 on:
   push:
     branches:

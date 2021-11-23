@@ -1,4 +1,5 @@
 name: release
+description: Jobs that need to run as apart of a release
 on:
   push:
     tags: 'v*'
