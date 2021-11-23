@@ -29,5 +29,5 @@ jobs:
       matrix:
         version: ${{fromJson(needs.create-matrices.outputs.debian-versions)}}
     steps:
-      name: Build Test on Debian ${{ matrix.version }}
-        - run: echo ${{ matrix.version }}
+      - name: Build Test on Debian ${{ matrix.version }}
+        run: echo ${{ matrix.version }}
