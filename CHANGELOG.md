@@ -9,6 +9,8 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 - update [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
 
+- update [`[87941fa]`](https://github.com/DevelopersToolbox/test/commit/87941fa215e8e067df2d3b8cad83e49a8d383339)
+
 ### [v0.1.2](https://github.com/DevelopersToolbox/test/compare/v0.1.1...v0.1.2)
 
 > Released on November, 23rd 2021
