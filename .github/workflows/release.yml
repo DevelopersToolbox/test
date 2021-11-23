@@ -22,9 +22,14 @@ jobs:
       - name: Get branch names.
         id: branch-names
         uses: tj-actions/branch-names@v5
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           ref: ${{ steps.branch-name.outputs.tag }}
+      - name: Echo default branch
+        run: echo ${{ steps.branch-name.outputs.current_branch }}
+      - name: Echo default branch status
+        run: echo ${{ steps.branch-name.outputs.is_default }}
       - name: Check default branch
         if: steps.branch-name.outputs.is_default != 'true'
         uses: actions/github-script@v3
