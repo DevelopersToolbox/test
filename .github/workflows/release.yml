@@ -10,9 +10,6 @@
 # Runs From:                                                                       #
 #    Runs from the latest tag.                                                     #
 # -------------------------------------------------------------------------------- #
-
-$default-branch
-
 name: release
 on:
   push:
