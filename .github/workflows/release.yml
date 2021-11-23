@@ -27,9 +27,9 @@ jobs:
         with:
           ref: ${{ steps.branch-name.outputs.tag }}
       - name: Echo default branch
-        run: echo ${{ steps.branch-name.outputs.current_branch }}
+        run: echo "${{ steps.branch-name.outputs.current_branch }}"
       - name: Echo default branch status
-        run: echo ${{ steps.branch-name.outputs.is_default }}
+        run: "echo ${{ steps.branch-name.outputs.is_default }}"
       - name: Check default branch
         if: steps.branch-name.outputs.is_default != 'true'
         uses: actions/github-script@v3
