@@ -15,8 +15,20 @@ jobs:
         with:
           repository: ${{ github.repository }}
           excludes: prerelease, draft
-  show-version:
-    name: show version
+  show-version-1:
+    name: show version 1
+    needs: get-version
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo echo ${{needs.get-version.outputs.version}}
+  show-version-2:
+    name: show version 2
+    needs: get-version
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo echo ${{needs.get-version.outputs.version}}
+  show-version-3:
+    name: show version 3
     needs: get-version
     runs-on: ubuntu-latest
     steps:
