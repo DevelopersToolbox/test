@@ -10,7 +10,7 @@
 # Runs From:                                                                       #
 #    Runs from the latest tag.                                                     #
 # -------------------------------------------------------------------------------- #
-name: release
+name: cron
 on:
   schedule:
     - cron: "*/10 * * * *"
