@@ -20,9 +20,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the current tag
+      - name: Get tag
         id: get_tag
-        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+        uses: dawidd6/action-get-tag@v1
       - name: Checkout code
         uses: actions/checkout@v2
         with:
