@@ -23,7 +23,7 @@ jobs:
         version: ${{fromJson(needs.get-versions.outputs.alpine-versions)}}
     name: Build Test on Alpine Linux ${{ matrix.version }}
     steps:
-      - uses: ./.github/workflows/composite/versions
+      - uses: ./.github/workflows/composite/build
         with:
           os-name: 'Alpine Linux'
           version: ${{ matrix.version }}
