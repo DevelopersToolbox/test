@@ -1,0 +1,20 @@
+name: 'Versions'
+description: 'Get Versions'
+
+input:
+  os:
+    description: “The os name”
+    required: true
+
+outputs:
+  versions:
+    description: "Alpine Versions"
+    value: ${{steps.get-versions.outputs.versions}}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get ${{ inputs.os }} versions
+      id: get-versions
+      run: echo "::set-output name=versions::$(ls -d Dockerfiles/${{ inputs.os }}/*/ | cut -f3 -d'/' | sort -n | jq -cnR '[inputs | select(length>0)]'))"
+      shell: bash

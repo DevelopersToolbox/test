@@ -1,0 +1,25 @@
+name: final
+on:
+  push:
+
+jobs:
+  alpine:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(steps.get-versions.outputs.versions)}}
+    name: Build Test on Alpine Linux ${{ matrix.version }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Get versions
+        id: get-versions
+        uses: ./.github/workflows/composite/get-versions
+        with:
+          os: 'alpine'
+      - name: Build Containers
+        uses: ./.github/workflows/composite/build
+        with:
+          os-name: 'Alpine Linux'
+          version: ${{ matrix.version }}
