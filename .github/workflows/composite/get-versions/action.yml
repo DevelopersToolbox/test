@@ -18,6 +18,3 @@ runs:
       id: get-versions
       run: echo "::set-output name=versions::$(ls -d Dockerfiles/${{ inputs.os }}/*/ | cut -f3 -d'/' | sort -n | jq -cnR '[inputs | select(length>0)]'))"
       shell: bash
-    - name: ls
-      run: ls -l
-      shell: bash
