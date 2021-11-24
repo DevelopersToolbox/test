@@ -41,7 +41,7 @@ jobs:
         version: ${{fromJson(needs.create-matrices.outputs.centos-versions)}}
     name: Test on Centos ${{ matrix.version }}
     steps:
-      - name: Build Test on Centos ${{ matrix.version }}
+      - name: Test on Centos ${{ matrix.version }}
         run: echo ${{ matrix.version }}
   debian:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       fail-fast: false
       matrix:
         version: ${{fromJson(needs.create-matrices.outputs.debian-versions)}}
-    name: Build Test on Debian ${{ matrix.version }}
+    name: Test on Debian ${{ matrix.version }}
     steps:
       - name: Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
