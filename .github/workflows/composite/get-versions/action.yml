@@ -1,14 +1,14 @@
 name: 'Versions'
 description: 'Get Versions'
 
-input:
+inputs:
   os:
     description: “The os name”
     required: true
 
 outputs:
   versions:
-    description: "Alpine Versions"
+    description: "Versions"
     value: ${{steps.get-versions.outputs.versions}}
 
 runs:
