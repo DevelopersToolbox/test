@@ -10,8 +10,11 @@ inputs:
     required: true
 
 runs:
+
   using: "composite"
   steps:
+    - name: Set up Docker
+      uses: docker-practice/actions-setup-docker@master
     - name: Echo OS Name
       run: echo ${{ inputs.os-name }}
       shell: bash
