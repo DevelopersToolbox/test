@@ -58,7 +58,8 @@ jobs:
       - debian
     runs-on: ubuntu-latest
     steps:
-      - uses: ahmadnassri/action-slack-workflow-notifications@v1
+      - name: GitHub Slack Workflow Notifications
+        uses: ahmadnassri/action-slack-workflow-notifications@v1.4.2
         with:
           slack-webhook: ${{secrets.SLACK_WEBHOOK_URL}}
 #          ignore-jobs: slack
