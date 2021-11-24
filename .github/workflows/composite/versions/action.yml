@@ -15,7 +15,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2
+#    - uses: actions/checkout@v2
     - id: alpine
       run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
       shell: bash
