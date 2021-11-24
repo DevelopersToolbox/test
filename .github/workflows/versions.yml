@@ -1,0 +1,21 @@
+name: versions
+on:
+  push:
+
+jobs:
+  get-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: ./.github/workflows/composite/versions
+  alpine:
+    runs-on: ubuntu-latest
+    needs: cget-versions
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(needs.get-versions.outputs.alpine-versions)}}
+    name: Build Test on Alpine Linux ${{ matrix.version }}
+    steps:
+      - run: echo ${{ matrix.version }}
