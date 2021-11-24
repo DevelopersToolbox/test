@@ -11,7 +11,6 @@ jobs:
       centos-versions: ${{steps.centos.outputs.versions}}
       debian-versions: ${{steps.debian.outputs.versions}}
     steps:
-    steps:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Generate alpine version matrix
