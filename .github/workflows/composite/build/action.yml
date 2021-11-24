@@ -1,0 +1,16 @@
+name: 'build'
+description: 'build stuff'
+
+inputs:
+  os-name:
+    description: “The os name”
+    required: true
+  version:
+    description: “the os version”
+    required: true
+
+runs:
+  using: "composite"
+  name: Build Test on ${{ inputs.os-name }} ${{ inputs.version }}
+  steps:
+    - run: echo ${{ inputs.version }}
