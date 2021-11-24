@@ -4,14 +4,17 @@ on:
 
 jobs:
   create-matrices:
+    name: Create version matrices
     runs-on: ubuntu-latest
     outputs:
       alpine-versions: ${{steps.alpine.outputs.versions}}
       centos-versions: ${{steps.centos.outputs.versions}}
       debian-versions: ${{steps.debian.outputs.versions}}
     steps:
-      - uses: actions/checkout@v2
-      - id: alpine
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Generate alpine version matrix
+        id: alpine
         run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
       - id: centos
         run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
