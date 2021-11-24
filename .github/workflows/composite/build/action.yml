@@ -11,6 +11,7 @@ inputs:
 
 runs:
   using: "composite"
-  name: Build Test on ${{ inputs.os-name }} ${{ inputs.version }}
   steps:
-    - run: echo ${{ inputs.version }}
+    - name: Echo Version
+      run: echo ${{ inputs.version }}
+      shell: bash

@@ -10,8 +10,10 @@ jobs:
       centos-versions: ${{steps.foo.outputs.centos-versions}}
       debian-versions: ${{steps.foo.outputs.debian-versions}}
     steps:
-      - uses: actions/checkout@v2
-      - id: foo
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Get OS Versions
+        id: foo
         uses: ./.github/workflows/composite/versions
 
   alpine:
@@ -23,8 +25,10 @@ jobs:
         version: ${{fromJson(needs.get-versions.outputs.alpine-versions)}}
     name: Build Test on Alpine Linux ${{ matrix.version }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/workflows/composite/build
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Build Containers
+        uses: ./.github/workflows/composite/build
         with:
           os-name: 'Alpine Linux'
           version: ${{ matrix.version }}
