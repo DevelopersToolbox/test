@@ -23,6 +23,7 @@ jobs:
         version: ${{fromJson(needs.get-versions.outputs.alpine-versions)}}
     name: Build Test on Alpine Linux ${{ matrix.version }}
     steps:
+      - uses: actions/checkout@v2
       - uses: ./.github/workflows/composite/build
         with:
           os-name: 'Alpine Linux'
@@ -36,6 +37,7 @@ jobs:
         version: ${{fromJson(needs.get-versions.outputs.centos-versions)}}
     name: Build Test on Alpine Linux ${{ matrix.version }}
     steps:
+      - uses: actions/checkout@v2
       - uses: ./.github/workflows/composite/build
         with:
           os-name: 'Centos'
