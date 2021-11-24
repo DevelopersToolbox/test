@@ -4,18 +4,24 @@ on:
 
 jobs:
   create-matrices:
+    name: Create version matrices
     runs-on: ubuntu-latest
     outputs:
       alpine-versions: ${{steps.alpine.outputs.versions}}
       centos-versions: ${{steps.centos.outputs.versions}}
       debian-versions: ${{steps.debian.outputs.versions}}
     steps:
-      - uses: actions/checkout@v2
-      - id: alpine
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Generate alpine version matrix
+        id: alpine
         run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
-      - id: centos
+      - name: Generate centos version matrix
+        id: centos
         run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
-      - id: debian
+      - name: Generate debian version matrix
+        id: debian
         run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
   alpine:
     runs-on: ubuntu-latest
@@ -24,7 +30,7 @@ jobs:
       fail-fast: false
       matrix:
         version: ${{fromJson(needs.create-matrices.outputs.alpine-versions)}}
-    name: Build Test on Alpine Linux ${{ matrix.version }}
+    name: Test on Alpine Linux ${{ matrix.version }}
     steps:
       - run: echo ${{ matrix.version }}
   centos:
@@ -34,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         version: ${{fromJson(needs.create-matrices.outputs.centos-versions)}}
-    name: Build Test on Centos ${{ matrix.version }}
+    name: Test on Centos ${{ matrix.version }}
     steps:
       - name: Build Test on Centos ${{ matrix.version }}
         run: echo ${{ matrix.version }}
@@ -47,10 +53,10 @@ jobs:
         version: ${{fromJson(needs.create-matrices.outputs.debian-versions)}}
     name: Build Test on Debian ${{ matrix.version }}
     steps:
-      - name: Build Test on Debian ${{ matrix.version }}
+      - name: Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
   slack:
-    if: ${{ always() }}
+    if: always()
     name: Slack Post Workflow Notification
     needs:
       - alpine
@@ -59,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Slack Workflow Notifications
-        uses: come25136/workflow-notification-for-slack@main
+        uses: come25136/workflow-notification-for-slack@1.0.0
         with:
           # Required Input
           repo_token: ${{secrets.GITHUB_TOKEN}}
