@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - run: ls -l
       - name: Get version matrices
         id: versions
         uses: ./.github/workflows/composite/get-versions
@@ -32,3 +33,16 @@ jobs:
         with:
           os-name: 'Alpine Linux'
           version: ${{ matrix.version }}
+  slack-workflow-status:
+    if: always()
+    name: Slack Post Workflow Notification
+    needs:
+      - alpine
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Post Workflow Notification
+        uses: Gamesight/slack-workflow-status@master
+        with:
+          include_jobs: true
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
