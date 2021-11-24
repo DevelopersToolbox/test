@@ -11,13 +11,14 @@ outputs:
   debian-versions:
     description: "Debian Versions"
     value: ${{steps.debian.outputs.versions}}
+
 runs:
   using: "composite"
-    steps:
-      - uses: actions/checkout@v2
-      - id: alpine
-        run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
-      - id: centos
-        run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
-      - id: debian
-        run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
+  steps:
+    - uses: actions/checkout@v2
+    - id: alpine
+      run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
+    - id: centos
+      run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
+    - id: debian
+      run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
