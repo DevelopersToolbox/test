@@ -12,6 +12,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Echo OS Name
+      run: echo ${{ inputs.os-name }}
+      shell: bash
     - name: Echo Version
       run: echo ${{ inputs.version }}
       shell: bash

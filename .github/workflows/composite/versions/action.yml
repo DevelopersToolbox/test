@@ -15,13 +15,15 @@ outputs:
 runs:
   using: "composite"
   steps:
-#    - uses: actions/checkout@v2
-    - id: alpine
+    - name: Get alpine versions
+      id: alpine
       run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
       shell: bash
-    - id: centos
+    - name: Get centos versions
+      id: centos
       run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
       shell: bash
-    - id: debian
+    - name: Get debian versions
+      id: debian
       run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
       shell: bash
