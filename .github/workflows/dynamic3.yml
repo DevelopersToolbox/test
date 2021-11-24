@@ -59,8 +59,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Slack Workflow Notifications
-        uses: ahmadnassri/action-slack-workflow-notifications@v1.4.2
+        uses: come25136/workflow-notification-for-slack@main
         with:
-          slack-webhook: ${{secrets.SLACK_WEBHOOK_URL}}
-#          ignore-jobs: slack
-#          ignore-steps: actions/checkout@v2
+          # Required Input
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
