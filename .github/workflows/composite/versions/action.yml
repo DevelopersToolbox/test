@@ -18,7 +18,10 @@ runs:
     - uses: actions/checkout@v2
     - id: alpine
       run: echo "::set-output name=versions::$(ls Dockerfiles/alpine|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      shell: bash
     - id: centos
       run: echo "::set-output name=versions::$(ls Dockerfiles/centos|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      shell: bash
     - id: debian
       run: echo "::set-output name=versions::$(ls Dockerfiles/debian|sort -n|jq -cnR '[inputs | select(length>0)]')"
+      shell: bash
