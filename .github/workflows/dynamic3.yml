@@ -49,8 +49,8 @@ jobs:
     steps:
       - name: Build Test on Debian ${{ matrix.version }}
         run: echo ${{ matrix.version }}
-  slack-workflow-status:
-    if: always()
+  slack:
+    if: ${{ always() }}
     name: Slack Post Workflow Notification
     needs:
       - alpine
@@ -58,10 +58,8 @@ jobs:
       - debian
     runs-on: ubuntu-latest
     steps:
-      - name: Slack Post Workflow Notification
-        uses: come25136/workflow-notification-for-slack@1.0.0
-#        uses: come25136/workflow-notification-for-slack@main
+      - uses: ahmadnassri/action-slack-workflow-notifications@v1
         with:
-          include_jobs: on-failure
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+          slack-webhook: ${{secrets.SLACK_WEBHOOK_URL}}
+#          ignore-jobs: slack
+#          ignore-steps: actions/checkout@v2
