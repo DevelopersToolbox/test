@@ -1,4 +1,4 @@
-name: release
+name: Jobs
 on:
   push:
 
@@ -6,7 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
+    - name: Checkout code
+      uses: actions/checkout@v2
     - id: foo
-      uses: user/composite@v1
+      uses: ./.github/workflows/composite/random-number
     - run: echo random-number ${{ steps.foo.outputs.random-number }} 
       shell: bash
