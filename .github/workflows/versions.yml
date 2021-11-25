@@ -7,9 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Get OS versions
     outputs:
-      alpine-versions: ${{steps.foo.outputs.alpine-versions}}
-      centos-versions: ${{steps.foo.outputs.centos-versions}}
-      debian-versions: ${{steps.foo.outputs.debian-versions}}
+      amazonlinux-versions: ${{steps.versions.outputs.amazonlinux-versions}}
+      archlinux-versions: ${{steps.versions.outputs.archlinux-versions}}
+      centos-versions: ${{steps.versions.outputs.centos-versions}}
+      debian-versions: ${{steps.versions.outputs.debian-versions}}
+      oraclelinux-versions: ${{steps.versions.outputs.oraclelinux-versions}}
+      photon-versions: ${{steps.versions.outputs.photon-versions}}
+      scientificlinux-versions: ${{steps.versions.outputs.scientificlinux-versions}}
+      ubuntu-versions: ${{steps.versions.outputs.ubuntu-versions}}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -59,4 +64,19 @@ jobs:
       - uses: ./.github/workflows/composite/build
         with:
           os-name: 'Debian'
+          version: ${{ matrix.version }}
+  photon:
+    runs-on: ubuntu-latest
+    needs: get-versions
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{fromJson(needs.get-versions.outputs.photon-versions)}}
+    if: ${{ needs.get-versions.outputs.photon-versions != '[]' }}
+    name: Build Test on Photon ${{ matrix.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/workflows/composite/build
+        with:
+          os-name: 'Photon'
           version: ${{ matrix.version }}
