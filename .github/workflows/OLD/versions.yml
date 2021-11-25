@@ -14,11 +14,12 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
       - name: Get OS Versions
-        id: versions
+        id: foo
         uses: actionstoolbox/container-framework-actions/actions/get-versions-all@master
   alpine:
     runs-on: ubuntu-latest
     needs: get-versions
+    if: ${{ needs.get-versions.outputs.alpine-versions != '[]' && needs.get-versions.outputs.alpine-versions != '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +36,7 @@ jobs:
   centos:
     runs-on: ubuntu-latest
     needs: get-versions
+    if: ${{ needs.get-versions.outputs.centos-versions != '[]' && needs.get-versions.outputs.centos-versions != '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -49,6 +51,7 @@ jobs:
   debian:
     runs-on: ubuntu-latest
     needs: get-versions
+    if: ${{ needs.get-versions.outputs.debian-versions != '[]' && needs.get-versions.outputs.debian-versions != '' }}
     strategy:
       fail-fast: false
       matrix:
