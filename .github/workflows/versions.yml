@@ -7,14 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Get OS versions
     outputs:
-      amazonlinux-versions: ${{steps.versions.outputs.amazonlinux-versions}}
-      archlinux-versions: ${{steps.versions.outputs.archlinux-versions}}
+      alpine-versions: ${{steps.versions.outputs.alpine-versions}}
       centos-versions: ${{steps.versions.outputs.centos-versions}}
       debian-versions: ${{steps.versions.outputs.debian-versions}}
-      oraclelinux-versions: ${{steps.versions.outputs.oraclelinux-versions}}
       photon-versions: ${{steps.versions.outputs.photon-versions}}
-      scientificlinux-versions: ${{steps.versions.outputs.scientificlinux-versions}}
-      ubuntu-versions: ${{steps.versions.outputs.ubuntu-versions}}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -58,6 +54,7 @@ jobs:
       fail-fast: false
       matrix:
         version: ${{fromJson(needs.get-versions.outputs.debian-versions)}}
+    if: ${{ needs.get-versions.outputs.debian-versions != '[]' }}
     name: Build Test on Debian ${{ matrix.version }}
     steps:
       - uses: actions/checkout@v2
