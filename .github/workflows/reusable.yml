@@ -4,7 +4,7 @@ on:
 
 jobs:
   get-git-ref:
-    name: get-tag
+    name: Get Git Ref
     runs-on: ubuntu-latest
     outputs:
       ref: ${{steps.get-git-ref.outputs.ref}}
@@ -17,6 +17,7 @@ jobs:
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: alpine
+      lint: false
       ref: ${{ needs.get-git-ref.outputs.ref }}
   centos:
     needs: get-git-ref
