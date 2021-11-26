@@ -10,6 +10,13 @@ jobs:
     with:
       directory: 'alpine'
       os-name: 'Alpine Linux'
+  debian:
+    name: Debian
+    runs-on: ubuntu-latest
+    uses: actionstoolbox/container-framework-actions/.github/workflows/build-containers.yml@master
+    with:
+      directory: 'debian'
+      os-name: 'Debian'
 
 
 
