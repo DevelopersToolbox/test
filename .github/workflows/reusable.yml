@@ -32,12 +32,20 @@ jobs:
       directory: debian
       publish_gh: true
       ref: ${{ needs.get-git-ref.outputs.ref }}
+  photon:
+    needs: get-git-ref
+    name: Photon
+    uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
+    with:
+      directory: photon
+      ref: ${{ needs.get-git-ref.outputs.ref }}
   slack-workflow-status:
     if: always()
     name: Slack Post Workflow Notification
     needs:
       - alpine
       - debian
+      - photon
     runs-on: ubuntu-latest
     steps:
       - name: Slack Post Workflow Notification
