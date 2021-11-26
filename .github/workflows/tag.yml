@@ -12,7 +12,7 @@ jobs:
       ref: ${{steps.get-git-ref.outputs.ref}}
     steps:
       - name: Checkout Repo
-        run: echo "::set-output name=ref::${{ github.sha }}"
+        run: echo "::set-output name=ref::${{ github.ref }}"
   alpine:
     needs: get-git-ref
     name: Alpine Linux
