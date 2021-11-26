@@ -21,6 +21,7 @@ jobs:
     with:
       directory: debian
       os-name: Debian
+      publish: true
   slack-workflow-status:
     if: always()
     name: Slack Post Workflow Notification
