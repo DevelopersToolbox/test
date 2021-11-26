@@ -21,11 +21,6 @@ jobs:
     needs:
       - build-alpine
       - build-centos
-      - debian
-      - oraclelinux
-      - photon
-      - scientificlinux
-      - ubuntu
     runs-on: ubuntu-latest
     steps:
       - name: Slack Post Workflow Notification
