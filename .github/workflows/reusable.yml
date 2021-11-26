@@ -15,6 +15,7 @@ jobs:
     with:
       directory: centos
       os-name: Centos
+      publish: true
   debian:
     name: Debian
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
