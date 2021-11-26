@@ -3,23 +3,38 @@ on:
   push:
 
 jobs:
+  get-git-ref:
+    name: get-tag
+    runs-on: ubuntu-latest
+    outputs:
+      ref: ${{steps.get-git-ref.outputs.ref}}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        run: echo "::set-output name=ref::${{ github.sha }}"
   alpine:
+    needs: get-git-ref
     name: Alpine Linux
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: alpine
+      ref: ${{ needs.get-git-ref.outputs.ref }}
   centos:
+    needs: get-git-ref
     name: Centos
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: centos
-      publish: true
+      publish_dh: true
+      ref: ${{ needs.get-git-ref.outputs.ref }}
   debian:
+    needs: get-git-ref
     name: Debian
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: debian
-      publish: true
+      publish_gh: true
+      ref: ${{ needs.get-git-ref.outputs.ref }}
   slack-workflow-status:
     if: always()
     name: Slack Post Workflow Notification
