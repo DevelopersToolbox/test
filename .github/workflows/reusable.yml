@@ -1,6 +1,9 @@
 name: reusable
+
 on:
   push:
+    branches:
+      - '**'
     tags-ignore:
       - '**'
 
