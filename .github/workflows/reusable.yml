@@ -9,23 +9,13 @@ jobs:
     with:
       directory: alpine
       os-name: Alpine Linux
+      token: ${{secrets.GITHUB_TOKEN}}
+      slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
   build-centos:
     name: Centos
     uses: actionstoolbox/container-framework-actions/.github/workflows/build-containers.yml@master
     with:
       directory: centos
       os-name: centos
-  slack-workflow-status:
-    if: always()
-    name: Slack Post Workflow Notification
-    needs:
-      - build-alpine
-      - build-centos
-    runs-on: ubuntu-latest
-    steps:
-      - name: Slack Post Workflow Notification
-        uses: Gamesight/slack-workflow-status@master
-        with:
-          include_jobs: true
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+      token: ${{secrets.GITHUB_TOKEN}}
+      slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
