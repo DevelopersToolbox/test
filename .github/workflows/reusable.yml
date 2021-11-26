@@ -10,7 +10,6 @@ jobs:
       ref: ${{steps.get-git-ref.outputs.ref}}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
         run: echo "::set-output name=ref::${{ github.sha }}"
   alpine:
     needs: get-git-ref
