@@ -1,0 +1,15 @@
+name: reusable
+on:
+  push:
+
+jobs:
+  alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Build Alpine
+        uses: actionstoolbox/container-framework-actions/workflows/test@master
+        with:
+          directory: 'alpine'
+          os-name: 'Alpine Linux'
