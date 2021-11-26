@@ -24,6 +24,14 @@ jobs:
       directory: alpine
       lint: false
       ref: ${{ needs.get-git-ref.outputs.ref }}
+  centos:
+    needs: get-git-ref
+    name: Centos
+    uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
+    with:
+      directory: centos
+      publish_dh: true
+      ref: ${{ needs.get-git-ref.outputs.ref }}
   debian:
     needs: get-git-ref
     name: Debian
