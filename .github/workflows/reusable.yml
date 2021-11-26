@@ -17,7 +17,16 @@ jobs:
     uses: actionstoolbox/container-framework-actions/.github/workflows/build-containers.yml@master
     with:
       directory: centos
-      os-name: centos
+      os-name: Centos
+    secrets:
+      token: ${{secrets.GITHUB_TOKEN}}
+      slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+  build-debian:
+    name: Debian
+    uses: actionstoolbox/container-framework-actions/.github/workflows/build-containers.yml@master
+    with:
+      directory: debian
+      os-name: Debian
     secrets:
       token: ${{secrets.GITHUB_TOKEN}}
       slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
