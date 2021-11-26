@@ -10,6 +10,7 @@ jobs:
       directory: alpine
       os-name: Alpine Linux
   build-centos:
+    name: Centos
     uses: actionstoolbox/container-framework-actions/.github/workflows/build-containers.yml@master
     with:
       directory: centos
