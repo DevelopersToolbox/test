@@ -9,6 +9,7 @@ jobs:
     with:
       directory: alpine
       os-name: Alpine Linux
+    secrets:
       token: ${{secrets.GITHUB_TOKEN}}
       slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
   build-centos:
@@ -17,5 +18,6 @@ jobs:
     with:
       directory: centos
       os-name: centos
+    secrets:
       token: ${{secrets.GITHUB_TOKEN}}
       slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
