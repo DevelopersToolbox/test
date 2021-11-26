@@ -8,20 +8,17 @@ jobs:
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: alpine
-      os-name: Alpine Linux
   centos:
     name: Centos
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: centos
-      os-name: Centos
       publish: true
   debian:
     name: Debian
     uses: actionstoolbox/container-framework-actions/.github/workflows/multiple-os-workflow.yml@master
     with:
       directory: debian
-      os-name: Debian
       publish: true
   slack-workflow-status:
     if: always()
