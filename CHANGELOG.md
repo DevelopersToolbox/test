@@ -7,7 +7,9 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.30...HEAD)
 
-- Fix gitignore to ignore gem file [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+- Add greetings [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+- Fix gitignore to ignore gem file [`[a484753]`](https://github.com/DevelopersToolbox/test/commit/a4847530fb7762b863934b50c4bc736832cb161a)
 
 - testing new features [`[1b3bd74]`](https://github.com/DevelopersToolbox/test/commit/1b3bd7468f90b8047df0b7744730d8e2187776f6)
 
