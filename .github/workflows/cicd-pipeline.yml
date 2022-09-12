@@ -51,14 +51,22 @@ jobs:
       - name: Run YAML-Lint
         run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/yaml-lint/master/pipeline.sh)
 
+  changelog:
+    name: Changelog
+    runs-on: ubuntu-latest
+    steps:
+      -uses: ardalanamini/auto-changelog@v3
+       id: changelog
+
   slack-workflow-status:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    if: always() && ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     name: Slack Post Workflow Notification
     needs:
       - actionlint
       - awesomebot
       - shellcheck
       - yaml-lint
+      - changelog
     runs-on: ubuntu-latest
     steps:
       - name: Slack Workflow Notifications
