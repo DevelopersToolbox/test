@@ -55,9 +55,19 @@ jobs:
     name: Changelog
     runs-on: ubuntu-latest
     steps:
-      - uses: Helmisek/conventional-changelog-generator@v1.0.6-release
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Update Changelog
+        uses: AlexxNB/chalogen@master
+        with:
+          title: My project changelog 
+      - name: Commit Changelog to repository
+        uses: stefanzweifel/git-auto-commit-action@v4.13.0
+        with:
+          commit_message: 'docs(Changelog): Update Changelog'
+          file_pattern: CHANGELOG.md
 
   slack-workflow-status:
     if: always() && ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
