@@ -55,8 +55,9 @@ jobs:
     name: Changelog
     runs-on: ubuntu-latest
     steps:
-      - uses: ardalanamini/auto-changelog@v3
-        id: changelog
+      - uses: Helmisek/conventional-changelog-generator@v1.0.6-release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   slack-workflow-status:
     if: always() && ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
