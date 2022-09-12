@@ -7,7 +7,9 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.30...HEAD)
 
-- Add greetings [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+- New stuff [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+- Add greetings [`[cae1959]`](https://github.com/DevelopersToolbox/test/commit/cae1959e27f56ff06eaee40baecd06963a28c285)
 
 - Add greetings [`[863d4b4]`](https://github.com/DevelopersToolbox/test/commit/863d4b4aeffb3554ff8022972ff2468ee81d5204)
 

@@ -4,6 +4,7 @@ on: [pull_request_target, issues]
 
 jobs:
   greeting:
+    name: Handle Greetings
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -13,4 +14,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: "Thank you for raising your first issue - all contributions to this project are welcome!"
-        pr-message: "Thank you for raising your first issue - all contributions to this project are welcome!"
+        pr-message: "Thank you for raising your first pull request - all contributions to this project are welcome!"
