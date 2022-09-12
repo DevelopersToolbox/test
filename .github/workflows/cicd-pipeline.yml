@@ -62,14 +62,14 @@ jobs:
       - name: Update Changelog
         uses: AlexxNB/chalogen@master
         with:
-          title: My project changelog 
+          title: Testing Random Shit
+          date: '%D %M %Y'
+          hide-body: true
       - name: Commit Changelog to repository
         uses: stefanzweifel/git-auto-commit-action@v4.13.0
         with:
           commit_message: 'docs(Changelog): Update Changelog'
           file_pattern: CHANGELOG.md
-          date: '%D %M %Y'
-          hide-body: true
 
   slack-workflow-status:
     if: always() && ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
