@@ -55,8 +55,8 @@ jobs:
     name: Changelog
     runs-on: ubuntu-latest
     steps:
-      -uses: ardalanamini/auto-changelog@v3
-       id: changelog
+      - uses: ardalanamini/auto-changelog@v3
+        id: changelog
 
   slack-workflow-status:
     if: always() && ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
