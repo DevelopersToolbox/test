@@ -2,6 +2,7 @@
 
 ### Other
 
+- New stuff [`aa4df8e4`](https://github.com/DevelopersToolbox/test/commit/aa4df8e4790a8d10b4ea2c107b6398109f48f2d5)
 - New stuff [`3431130e`](https://github.com/DevelopersToolbox/test/commit/3431130ea61e94ff359535d4898f713644a1033a)
 - Merge branch 'main' of github.com:DevelopersToolbox/test [`aba7b6e9`](https://github.com/DevelopersToolbox/test/commit/aba7b6e9eaac2c615810285b21c352914c7f648f)
 - New stuff [`3140210f`](https://github.com/DevelopersToolbox/test/commit/3140210fb1b064904fcda4aee906e5b7e1d4d4d9)
@@ -19,7 +20,7 @@
 - Update [`bd14a8e2`](https://github.com/DevelopersToolbox/test/commit/bd14a8e2debe8bdcde160c6ef45f7fe42c8b6f5e)
 - Release generation [`5cbf5861`](https://github.com/DevelopersToolbox/test/commit/5cbf586117694896061aab676091974dd2243cf8)
 
-## 0.1.29 - 26 11 2021
+## 0.1.29 - 26/11/2021
 
 ### Other
 
