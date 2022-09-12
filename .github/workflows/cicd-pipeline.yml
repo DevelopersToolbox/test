@@ -62,8 +62,8 @@ jobs:
       - name: Update Changelog
         uses: AlexxNB/chalogen@master
         with:
-          title: Testing Random Shit
-          date: '%D %M %Y'
+          title: 'Testing Random Shit'
+          date: '%D/%M/%Y'
           hide-body: true
       - name: Commit Changelog to repository
         uses: stefanzweifel/git-auto-commit-action@v4.13.0
