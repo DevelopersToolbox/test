@@ -19,10 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get current version
-        id: get-current-version
-        run: |
-          RELEASE_VERSION="${GITHUB_REF#refs/*/}"
-          echo "::set-output name=version::${RELEASE_VERSION}"
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> "${GITHUB_ENV}"
 
       - name: Changelog
         uses: Bullrich/generate-release-changelog@master
@@ -37,7 +34,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref }}
 #          name: Release ${{ steps.get-current-version.outputs.version }}
-          name: Release ${{ github.ref }}
+          name: Release ${{ env.RELEASE_VERSION }}
           body: ${{ steps.Changelog.outputs.changelog }}
 #          generate_release_notes: true
           draft: false
