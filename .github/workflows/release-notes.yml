@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Create Release
@@ -23,9 +26,10 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tokan: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref }}
-          body: ${{ steps.Changelog.outputs.changelog }}
+#          body: ${{ steps.Changelog.outputs.changelog }}
+          generate_release_notes: true
           draft: false
           prerelease: false
