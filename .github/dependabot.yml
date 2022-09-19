@@ -5,8 +5,11 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "01:00"
     open-pull-requests-limit: 10
+    commit-message:
+      prefix: "chore:"
     labels:
-      - "dependabot: lang : github actions"
+      - "dependabot: ecosystem : github actions"
       - "dependabot: dependencies"
 

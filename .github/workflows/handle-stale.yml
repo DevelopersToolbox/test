@@ -2,7 +2,7 @@ name: Stale issue/pr handler
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3 4 * * *'
+    - cron: '40 5 * * *'
 
 permissions:
   issues: write

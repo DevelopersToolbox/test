@@ -5,9 +5,37 @@ All notable changes to this project will be documented in this file.
 
 This changelog was automatically generated using [Caretaker](https://github.com/DevelopersToolbox/caretaker) by [Wolf Software](https://github.com/WolfSoftware)
 
-### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.30...HEAD)
+### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.34...HEAD)
 
-- New stuff [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+- update [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+### [v0.1.33](https://github.com/DevelopersToolbox/test/compare/v0.1.32...v0.1.33)
+
+> Released on September, 13th 2022
+
+- diddling [`[ecdd9f9]`](https://github.com/DevelopersToolbox/test/commit/ecdd9f9da2589c61b0b511f5efc9fd85bafdb886)
+
+### [v0.1.32](https://github.com/DevelopersToolbox/test/compare/v0.1.31...v0.1.32)
+
+> Released on September, 13th 2022
+
+- diddling [`[62007a9]`](https://github.com/DevelopersToolbox/test/commit/62007a970bcb17d3009dd89381eae804c94f54b2)
+
+### [v0.1.31](https://github.com/DevelopersToolbox/test/compare/v0.1.30...v0.1.31)
+
+> Released on September, 13th 2022
+
+- diddling [`[d164ef1]`](https://github.com/DevelopersToolbox/test/commit/d164ef1080e60e3eff2d07e0180dba25e06b0365)
+
+### [v0.1.30](https://github.com/DevelopersToolbox/test/compare/v0.1.27...v0.1.30)
+
+> Released on September, 13th 2022
+
+- test automated released [`[3814e51]`](https://github.com/DevelopersToolbox/test/commit/3814e515b78b2ff87d22d9afc11b7ba722d20986)
+
+- test automated released [`[cdbcc81]`](https://github.com/DevelopersToolbox/test/commit/cdbcc81c79151b3ae5863695f50c696c01c400df)
+
+- New stuff [`[33a30d5]`](https://github.com/DevelopersToolbox/test/commit/33a30d5ae3cd61232be7da656634cd46e0e48a7f)
 
 - New stuff [`[71cff95]`](https://github.com/DevelopersToolbox/test/commit/71cff9568cfece15cbdfccb932255f74ec0e7132)
 
