@@ -9,6 +9,12 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 - update [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
 
+- chore: bump actions/checkout from 2 to 3 [`[#3]`](https://github.com/DevelopersToolbox/test/pull/3)
+
+- chore: bump actions/setup-python from 1 to 4 [`[#4]`](https://github.com/DevelopersToolbox/test/pull/4)
+
+- update [`[ccc1f5d]`](https://github.com/DevelopersToolbox/test/commit/ccc1f5d85d3956b93bbb3ae781151d0fe15701fc)
+
 ### [v0.1.33](https://github.com/DevelopersToolbox/test/compare/v0.1.32...v0.1.33)
 
 > Released on September, 13th 2022
