@@ -47,7 +47,7 @@ jobs:
           node-version: 16
       - name: Run Markdown Lint
         env:
-          EXCLUDE_FILES: "README.md"
+          EXCLUDE_FILES: "README.md,CHANGELOG.md"
         run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/markdown-lint/master/pipeline.sh)
 
 
