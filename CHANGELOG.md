@@ -7,7 +7,11 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.34...HEAD)
 
-- update [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+- test [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+- chore: bump actions/stale from 5 to 6 [`[#5]`](https://github.com/DevelopersToolbox/test/pull/5)
+
+- update [`[763ab2e]`](https://github.com/DevelopersToolbox/test/commit/763ab2e2e286b86126cc88b0eb4607861c56da4b)
 
 - update [`[ae2a8ac]`](https://github.com/DevelopersToolbox/test/commit/ae2a8ac5c3878ae019b36af8b9b57a1ba0c1216b)
 

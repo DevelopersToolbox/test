@@ -69,6 +69,8 @@ jobs:
         with:
           python-version: '3.10'
       - name: Run YAML-Lint
+        env:
+          EXCLUDE_FILES: ".github/workflows"
         run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/yaml-lint/master/pipeline.sh)
 
   slack-workflow-status:
