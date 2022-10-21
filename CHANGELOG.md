@@ -9,6 +9,8 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 - testing [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
 
+- testing [`[5b3db4a]`](https://github.com/DevelopersToolbox/test/commit/5b3db4a7879577eef61476262b9733d1d2b2bca9)
+
 - chore: bump dependabot/fetch-metadata from 1.3.3 to 1.3.4 [`[#6]`](https://github.com/DevelopersToolbox/test/pull/6)
 
 Bumps [dependabot/fetch-metadata](https://github.com/dependabot/fetch-metadata) from 1.3.3 to 1.3.4.
