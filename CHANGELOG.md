@@ -7,7 +7,27 @@ This changelog was automatically generated using [Caretaker](https://github.com/
 
 ### [Unreleased](https://github.com/DevelopersToolbox/test/compare/v0.1.34...HEAD)
 
-- test [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+- testing [`[head]`](https://github.com/DevelopersToolbox/test/commit/)
+
+- chore: bump dependabot/fetch-metadata from 1.3.3 to 1.3.4 [`[#6]`](https://github.com/DevelopersToolbox/test/pull/6)
+
+Bumps [dependabot/fetch-metadata](https://github.com/dependabot/fetch-metadata) from 1.3.3 to 1.3.4.
+- [Release notes](https://github.com/dependabot/fetch-metadata/releases)
+- [Commits](https://github.com/dependabot/fetch-metadata/compare/v1.3.3...v1.3.4)
+
+---
+updated-dependencies:
+- dependency-name: dependabot/fetch-metadata
+ dependency-type: direct:production
+ update-type: version-update:semver-patch
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+Signed-off-by: dependabot[bot] <support@github.com>
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+- test [`[7a493a1]`](https://github.com/DevelopersToolbox/test/commit/7a493a14dbcb825acd2d00bdc8442f54247446ba)
 
 - chore: bump actions/stale from 5 to 6 [`[#5]`](https://github.com/DevelopersToolbox/test/pull/5)
 

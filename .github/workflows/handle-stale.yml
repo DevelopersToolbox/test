@@ -2,7 +2,7 @@ name: Stale issue/pr handler
 on:
   workflow_dispatch:
   schedule:
-    - cron: '40 5 * * *'
+    - cron: '0 4 * * *'
 
 permissions:
   issues: write
@@ -13,7 +13,8 @@ jobs:
     name: Handle stale Issues & PRs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v6
+      - name: Handle state Issues & PRs
+        uses: actions/stale@v6
         id: stale
         with:
           stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
