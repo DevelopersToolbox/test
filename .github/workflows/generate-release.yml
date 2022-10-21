@@ -3,8 +3,8 @@ name: Create Release Notes
 on:
   push:
     tags:
-      - 'v*.*.*'
       - '!v*.*.*-rc.*'
+      - 'v*.*.*'
 
 permissions:
   contents: write
