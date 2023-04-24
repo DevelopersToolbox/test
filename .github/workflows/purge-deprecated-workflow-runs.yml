@@ -1,8 +1,6 @@
-name: Greetings
+name: Purge deprecated workflow runs
 
 on:
-  pull_request_target:
-  issues:
   workflow_dispatch:
     inputs:
       slack-notify:
@@ -14,9 +12,13 @@ on:
           - 'true'
           - 'false'
 
+  schedule:
+    - cron: '59 4 * * 1'
+
 env:
   SLACK_NOTIFY: false
 
+# Declare default permissions as read only.
 permissions: read-all
 
 jobs:
@@ -31,12 +33,11 @@ jobs:
         run: |
           echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
 
-  greetings:
-    name: Greetings (Local)
+  purge-deprecated-workflow-runs:
+    name: Purge deprecated workflow runs (Local)
     permissions:
-      issues: write
-      pull-requests: write
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-greetings.yml@master
+      actions: write
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-purge-deprecated-workflow-runs.yml@master
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -45,7 +46,7 @@ jobs:
     name: Slack (Local)
     needs:
       - set-output-defaults
-      - greetings
+      - purge-deprecated-workflow-runs
     uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
       slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
