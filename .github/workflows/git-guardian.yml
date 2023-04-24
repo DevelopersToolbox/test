@@ -25,7 +25,6 @@ on:
 env:
   SLACK_NOTIFY: true
 
-# Declare default permissions as read only.
 permissions: read-all
 
 jobs:

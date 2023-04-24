@@ -2,54 +2,53 @@ name: Stale issue/pr handler
 
 on:
   workflow_dispatch:
+    inputs:
+      slack-notify:
+        description: 'Notify Slack'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
   schedule:
     - cron: '47 2 * * *'
 
 env:
   SLACK_NOTIFY: false
 
-# Declare default permissions as read only.
 permissions: read-all
 
 jobs:
+  set-output-defaults:
+    name: Set Output Defaults
+    runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
   handle-stale-entries:
-    name: Handle stale Issues & PRs
+    name: Handle stale Issues & PRs (Local)
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
-    steps:
-      - name: Handle state Issues & PRs
-        uses: actions/stale@1160a2240286f5da8ec72b1c0816ce2481aabf84 # v8.0.0
-        id: stale
-        with:
-          stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
-          close-issue-message: 'This issue was closed because it has been stalled for 5 days with no activity.'
-          days-before-issue-stale: 30
-          days-before-issue-close: 5
-          stale-issue-label: 'state: stale'
-          close-issue-label: 'resolution closed'
-          exempt-issue-labels: 'state: blocked,state: keep'
-          stale-pr-message: 'This PR is stale because it has been open 45 days with no activity. Remove stale label or comment or this will be closed in 10 days.'
-          close-pr-message: 'This PR was closed because it has been stalled for 10 days with no activity.'
-          days-before-pr-stale: 45
-          days-before-pr-close: 10
-          stale-pr-label: 'state: stale'
-          close-pr-label: 'resolution: closed'
-          exempt-pr-labels: 'state: blocked,state: keep'
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-handle-stale.yml@master
 
   slack-workflow-status:
     if: always()
-    name: Slack Post Workflow Notification
+    name: Slack (Local)
     needs:
+      - set-output-defaults
       - handle-stale-entries
-    runs-on: ubuntu-latest
-    steps:
-      - name: Slack Workflow Notifications
-        if: ${{ env.SLACK_NOTIFY == 'true' && github.event_name == 'push' }}
-        uses: Gamesight/slack-workflow-status@26a36836c887f260477432e4314ec3490a84f309 # v1.2.0
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          include_jobs: on-failure
-          include_commit_message: true
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    with:
+      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
