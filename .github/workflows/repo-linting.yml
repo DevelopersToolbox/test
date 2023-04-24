@@ -36,19 +36,19 @@ jobs:
           echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
 
   action-lint:
-    name: Action Lint (Local)
+    name: Repository Linting
     uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-action-lint.yml@master
 
   awesomebot:
-    name: Awesomebot (Local)
+    name: Repository Linting
     uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-awesomebot.yml@master
 
   markdown-lint:
-    name: Markdown Lint (Local)
+    name: Repository Linting
     uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-markdown-lint.yml@master
 
   yaml-lint:
-    name: Markdown Lint (Local)
+    name: Repository Linting
     uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-yaml-lint.yml@master
 
   slack-workflow-status:
