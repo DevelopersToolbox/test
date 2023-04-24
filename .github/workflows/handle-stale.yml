@@ -34,7 +34,6 @@ jobs:
 
   handle-stale-entries:
     name: Handle stale Issues & PRs (Local)
-    runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
