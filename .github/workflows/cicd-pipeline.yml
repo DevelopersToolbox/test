@@ -11,7 +11,16 @@ on:
       - '**'
     paths-ignore:
       - '**.md'
-
+  workflow_dispatch:
+    inputs:
+      slack-notify:
+        description: 'Notify Slack'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 env:
   SLACK_NOTIFY: true
 
@@ -27,7 +36,7 @@ jobs:
       - name: set outputs with default values
         id: set-output-defaults
         run: |
-          echo "slack-notify=${{ env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
 
   shellcheck:
     name: ShellCheck (Local)
@@ -45,3 +54,4 @@ jobs:
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
