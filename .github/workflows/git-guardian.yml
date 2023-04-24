@@ -1,6 +1,26 @@
 name: GitGuardian scan
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+    inputs:
+      slack-notify:
+        description: 'Notify Slack'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 env:
   SLACK_NOTIFY: true
@@ -9,35 +29,33 @@ env:
 permissions: read-all
 
 jobs:
-  scanning:
-    name: GitGuardian scan
+  set-output-defaults:
+    name: Set Output Defaults
     runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-        with:
-          fetch-depth: 0 # fetch all history so multiple commits can be scanned
-      - name: GitGuardian scan
-        uses: GitGuardian/ggshield-action@457dacf2e8238d9443115a4a56bafcd3f99afbed # v1.14.5
-        env:
-          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
-          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
-          GITHUB_PULL_BASE_SHA:  ${{ github.event.pull_request.base.sha }}
-          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
+  gitguardian-scan:
+    name: GitGuardian Scan (Local)
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-gitguardian.yml@master
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      gitguardian-api-key: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   slack-workflow-status:
-    if: always() && ${{ github.actor != 'dependabot[bot]' }}
-    name: Slack Post Workflow Notification
+    if: always()
+    name: Slack (Local)
     needs:
-      - scanning
-    runs-on: ubuntu-latest
-    steps:
-      - name: Slack Workflow Notifications
-        if: ${{ env.SLACK_NOTIFY == 'true' && github.event_name == 'push' }}
-        uses: Gamesight/slack-workflow-status@26a36836c887f260477432e4314ec3490a84f309 # v1.2.0
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          include_jobs: on-failure
-          include_commit_message: true
+      - set-output-defaults
+      - gitguardian-scan
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    with:
+      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
