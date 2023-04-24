@@ -37,7 +37,7 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-handle-stale.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-handle-stale.yml@master
 
   slack-workflow-status:
     if: always()
@@ -45,7 +45,7 @@ jobs:
     needs:
       - set-output-defaults
       - handle-stale-entries
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
       slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
     secrets:

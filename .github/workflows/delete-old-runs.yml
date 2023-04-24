@@ -46,7 +46,7 @@ jobs:
       actions: write
     needs:
       - set-output-defaults
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-delete-old-runs.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-delete-old-runs.yml@master
     with:
       older-than-seconds: ${{ needs.set-output-defaults.outputs.older-than-seconds }}
     secrets:
@@ -58,7 +58,7 @@ jobs:
     needs:
       - set-output-defaults
       - delete-old-workflows
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
       slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
     secrets:

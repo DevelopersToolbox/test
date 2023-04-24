@@ -1,5 +1,4 @@
 name: Repository Linting
-run-name: Lint all the things
 
 on:
   push:
@@ -8,37 +7,62 @@ on:
   pull_request:
     branches:
       - '**'
+  workflow_dispatch:
+    inputs:
+      slack-notify:
+        description: 'Notify Slack'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+env:
+  SLACK_NOTIFY: true
 
 permissions: read-all
 
 jobs:
+  set-output-defaults:
+    name: Set Output Defaults
+    runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
   action-lint:
     name: Action Lint
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-action-lint.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-action-lint.yml@master
 
   awesomebot:
     name: Awesomebot
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-awesomebot.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-awesomebot.yml@master
 
   markdown-lint:
     name: Markdown Lint
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-markdown-lint.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-markdown-lint.yml@master
 
   yaml-lint:
     name: YAML Lint
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-yaml-lint.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-yaml-lint.yml@master
 
   slack-workflow-status:
     if: always()
     name: Slack
     needs:
+      - set-output-defaults
       - action-lint
       - awesomebot
       - markdown-lint
       - yaml-lint
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
-      slack_notify: true
+      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}

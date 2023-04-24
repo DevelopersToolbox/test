@@ -41,7 +41,7 @@ jobs:
 
   shellcheck:
     name: ShellCheck (Local)
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-shellcheck.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-shellcheck.yml@master
 
   slack-workflow-status:
     if: always()
@@ -49,7 +49,7 @@ jobs:
     needs:
       - set-output-defaults
       - shellcheck
-    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
       slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
     secrets:
