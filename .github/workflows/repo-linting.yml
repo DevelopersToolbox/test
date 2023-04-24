@@ -1,0 +1,147 @@
+name: Repository Linting
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+env:
+  SLACK_NOTIFY: true
+
+# Declare default permissions as read only.
+permissions: read-all
+
+jobs:
+  get-go-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-language-versions.outputs.latest-versions }}
+    steps:
+    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
+      id: get-language-versions
+      with:
+        language: "go"
+        highest-only: true
+        remove-patch-version: true
+
+  actionlint:
+    name: Action Lint
+    needs: get-go-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Setup Go ${{ needs.get-go-version.outputs.version }}
+        uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4.0.0
+        with:
+          go-version: ${{ needs.get-go-version.outputs.version }}
+      - name: Run Action Lint
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/action-lint/master/pipeline.sh)
+
+  get-ruby-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-language-versions.outputs.latest-versions }}
+    steps:
+    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
+      id: get-language-versions
+      with:
+        language: "ruby"
+        highest-only: true
+        remove-patch-version: true
+
+  awesomebot:
+    name: Awesomebot
+    needs: get-ruby-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Set up Ruby ${{ needs.get-ruby-version.outputs.version }}
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          ruby-version: ${{ needs.get-ruby-version.outputs.version }}
+      - name: Run Awesomebot
+        env:
+          FLAGS: "default"
+          EXCLUDE_FILES: "CHANGELOG.md"
+          WHITELIST: "https://img.shields.io"
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/awesomebot/master/pipeline.sh)
+
+  get-node-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-language-versions.outputs.latest-versions }}
+    steps:
+    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
+      id: get-language-versions
+      with:
+        language: "node"
+        highest-only: true
+        remove-patch-version: true
+
+  markdown-lint:
+    name: Markdown Lint
+    needs: get-node-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Setup node ${{ needs.get-node-version.outputs.version }}
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version: ${{ needs.get-node-version.outputs.version }}
+      - name: Run Markdown Lint
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/markdown-lint/master/pipeline.sh)
+        env:
+          EXCLUDE_FILES: "README.md"
+
+  get-python-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-language-versions.outputs.latest-versions }}
+    steps:
+    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
+      id: get-language-versions
+      with:
+        language: "python"
+        highest-only: true
+        remove-patch-version: true
+
+  yaml-lint:
+    name: YAML Lint
+    needs: get-python-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - name: Set up Python ${{ needs.get-python-version.outputs.version }}
+        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b # v4.6.0
+        with:
+          python-version: ${{ needs.get-python-version.outputs.version }}
+      - name: Run YAML-Lint
+        env:
+          EXCLUDE_FILES: ".github/workflows"
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/yaml-lint/master/pipeline.sh)
+
+  slack-workflow-status:
+    if: always() && ${{ github.actor != 'dependabot[bot]' }}
+    name: Slack Post Workflow Notification
+    needs:
+      - actionlint
+      - awesomebot
+      - markdown-lint
+      - yaml-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Workflow Notifications
+        if: ${{ env.SLACK_NOTIFY == 'true' && github.event_name == 'push' }}
+        uses: Gamesight/slack-workflow-status@26a36836c887f260477432e4314ec3490a84f309 # v1.2.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          include_jobs: on-failure
+          include_commit_message: true
