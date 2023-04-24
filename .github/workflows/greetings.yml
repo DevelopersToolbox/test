@@ -1,6 +1,18 @@
 name: Greetings
 
-on: [pull_request_target, issues]
+on:
+  pull_request_target:
+  issues:
+  workflow_dispatch:
+    inputs:
+      slack-notify:
+        description: 'Notify Slack'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 env:
   SLACK_NOTIFY: false
@@ -9,32 +21,35 @@ env:
 permissions: read-all
 
 jobs:
-  greeting:
-    name: Handle Greetings
+  set-output-defaults:
+    name: Set Output Defaults
     runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
+  greetings:
+    name: Greetings (Local)
     permissions:
       issues: write
       pull-requests: write
-    steps:
-    - name: Handle greetings
-      uses: actions/first-interaction@1d8459ca65b335265f1285568221e229d45a995e # v1.1.1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: "Thank you for raising your first issue - all contributions to this project are welcome!"
-        pr-message: "Thank you for raising your first pull request - all contributions to this project are welcome!"
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-greetings.yml@master
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
 
   slack-workflow-status:
-    if: always() && ${{ github.actor != 'dependabot[bot]' }}
-    name: Slack Post Workflow Notification
+    if: always()
+    name: Slack (Local)
     needs:
-      - greeting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Slack Workflow Notifications
-        if: ${{ env.SLACK_NOTIFY == 'true' && github.event_name == 'push' }}
-        uses: Gamesight/slack-workflow-status@26a36836c887f260477432e4314ec3490a84f309 # v1.2.0
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          include_jobs: on-failure
-          include_commit_message: true
+      - set-output-defaults
+      - greetings
+    uses: actionstoolbox/reusable-workflows/.github/workflows/reusable-slack.yml@master
+    with:
+      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
