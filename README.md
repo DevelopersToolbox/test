@@ -4,10 +4,10 @@
     </a>
     <br />
     <a href="https://github.com/DevelopersToolbox/test/actions/workflows/cicd-pipeline-shared.yml">
-        <img src="https://img.shields.io/github/workflow/status/DevelopersToolbox/test/CICD%20Pipeline%20(Shared)/master?label=shared%20pipeline&style=for-the-badge" alt="Github Build Status">
+        <img src="https://img.shields.io/github/workflow/status/DevelopersToolbox/test/CICD%20Pipeline%20(Shared)/master?label=shared%20pipeline&style=for-the-badge" alt="Github Build Status" />
     </a>
     <a href="https://github.com/DevelopersToolbox/test/actions/workflows/cicd-pipeline-custom.yml">
-        <img src="https://img.shields.io/github/workflow/status/DevelopersToolbox/test/CICD%20Pipeline%20(Custom)/master?label=custom%20pipeline&style=for-the-badge" alt="Github Build Status">
+        <img src="https://img.shields.io/github/workflow/status/DevelopersToolbox/test/CICD%20Pipeline%20(Custom)/master?label=custom%20pipeline&style=for-the-badge" alt="Github Build Status" />
     </a>
     <br />
     <a href="https://github.com/DevelopersToolbox/test/blob/master/.github/CODE_OF_CONDUCT.md">
