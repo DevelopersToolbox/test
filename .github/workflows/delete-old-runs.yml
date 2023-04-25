@@ -23,7 +23,6 @@ env:
   SLACK_NOTIFY: false
   OLDER_THAN_SECONDS: 604800
 
-# Declare default permissions as read only.
 permissions: read-all
 
 jobs:
@@ -31,13 +30,11 @@ jobs:
     name: Set Output Defaults
     runs-on: ubuntu-latest
     outputs:
-      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
       older-than-seconds: ${{ steps.set-output-defaults.outputs.older-than-seconds }}
     steps:
       - name: set outputs with default values
         id: set-output-defaults
         run: |
-          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
           echo "older-than-seconds=${{ github.event.inputs.older-than-seconds || env.OLDER_THAN_SECONDS }}" >> "${GITHUB_OUTPUT}"
 
   delete-old-workflows:
@@ -52,15 +49,26 @@ jobs:
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 
+  set-slack-notify:
+    name: Set Slack Notify
+    runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-slack-notify.outputs.slack-notify }}
+    steps:
+      - name: Set Slack Notify
+        id: set-slack-notify
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
   slack-workflow-status:
     if: always()
     name: Slack (Local)
     needs:
-      - set-output-defaults
       - delete-old-workflows
+      - set-slack-notify
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
-      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
+      slack_notify: ${{ needs.set-slack-notify.outputs.slack-notify }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}

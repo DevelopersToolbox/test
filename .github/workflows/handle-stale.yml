@@ -21,17 +21,6 @@ env:
 permissions: read-all
 
 jobs:
-  set-output-defaults:
-    name: Set Output Defaults
-    runs-on: ubuntu-latest
-    outputs:
-      slack-notify: ${{ steps.set-output-defaults.outputs.slack-notify }}
-    steps:
-      - name: set outputs with default values
-        id: set-output-defaults
-        run: |
-          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
-
   handle-stale-entries:
     name: Handle stale Issues & PRs (Local)
     permissions:
@@ -39,15 +28,26 @@ jobs:
       pull-requests: write
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-handle-stale.yml@master
 
+  set-slack-notify:
+    name: Set Slack Notify
+    runs-on: ubuntu-latest
+    outputs:
+      slack-notify: ${{ steps.set-slack-notify.outputs.slack-notify }}
+    steps:
+      - name: Set Slack Notify
+        id: set-slack-notify
+        run: |
+          echo "slack-notify=${{ github.event.inputs.slack-notify || env.SLACK_NOTIFY }}" >> "${GITHUB_OUTPUT}"
+
   slack-workflow-status:
     if: always()
     name: Slack (Local)
     needs:
-      - set-output-defaults
       - handle-stale-entries
+      - set-slack-notify
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
-      slack_notify: ${{ needs.set-output-defaults.outputs.slack-notify }}
+      slack_notify: ${{ needs.set-slack-notify.outputs.slack-notify }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
