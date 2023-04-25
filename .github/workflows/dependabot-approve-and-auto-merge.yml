@@ -5,7 +5,6 @@ on: pull_request_target
 permissions: read-all
 
 jobs:
-
   dependabot:
     name: Dependabot
     permissions:
@@ -14,40 +13,7 @@ jobs:
       issues: write
       pull-requests: write
       repository-projects: write
-
-    runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
-    steps:
-      - name: Dependabot metadata
-        id: dependabot-metadata
-        uses: dependabot/fetch-metadata@efb5c8deb113433243b6b08de1aa879d5aa01cf7 # v1.4.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Approve a PR
-        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: | 
-          gh pr review --approve "${PR_URL}"
-          gh pr edit "${PR_URL}" --add-label "dependabot: auto approve"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Auto-merge non major updates
-        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
-        run: |
-          gh pr merge --auto --squash "${PR_URL}"
-          gh pr edit "${PR_URL}" --add-label "dependabot: auto merge"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment + label major updates
-        if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
-        run: |
-          gh pr comment "${PR_URL}" --body "I'm **not approving** this PR because **it includes a major update of a dependency**"
-          gh pr edit "${PR_URL}" --add-label "dependabot: manual approve"
-          gh pr edit "${PR_URL}" --add-label "dependabot: manual merge"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-dependabot-approve-and-auto-merge.yml@master
+    secrets:
+        token: ${{ secrets.GITHUB_TOKEN }}
