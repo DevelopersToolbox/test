@@ -27,8 +27,6 @@ jobs:
   reek:
     name: Reek
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-reek.yml@master
-    with:
-      show-skipped: True
 
   rubocop:
     name: Rubocop
