@@ -24,9 +24,9 @@ env:
 permissions: read-all
 
 jobs:
-  perl-lint:
-    name: Perl Lint
-    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-perl-lint.yml@master
+  bundler:
+    name: Bundler
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-bundler.yml@master
 
   set-slack-notify:
     name: Set Slack Notify
@@ -43,7 +43,7 @@ jobs:
     if: always() && ${{ github.actor != 'dependabot[bot]' }}
     name: Slack Post Workflow Notification
     needs:
-      - perl-lint
+      - bundler
       - set-slack-notify
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
