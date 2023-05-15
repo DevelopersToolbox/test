@@ -30,6 +30,10 @@ jobs:
     with:
       exclude-files: '\.md$'
 
+  pydocstyle:
+    name: Pydocstyle (Local)
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pydocstyle.yml@master
+
   pylint:
     name: Pylint (Local)
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pylint.yml@master
@@ -46,23 +50,6 @@ jobs:
       id: get-language-versions
       with:
         language: "python"
-
-  pydocstyle:
-    name: Pydocstyle
-    needs: get-python-versions
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-versions: ${{ fromJson(needs.get-python-versions.outputs.version-matrix) }}
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      - name: Set up Python ${{ matrix.python-versions }}
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b # v4.6.0
-        with:
-          python-version: ${{ matrix.python-versions }}
-      - name: Run Pydocstyle
-        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/pydocstyle/master/pipeline.sh)
 
   pycodestyle:
     name: Pycodestyle
