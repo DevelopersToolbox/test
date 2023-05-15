@@ -13,7 +13,7 @@ on:
           - 'false'
 
   schedule:
-    - cron: '9 2 * * *'
+    - cron: '1 4 * * *'
 
 env:
   SLACK_NOTIFY: false

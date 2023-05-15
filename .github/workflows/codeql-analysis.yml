@@ -7,7 +7,7 @@ on:
     branches: [ '**' ]
   workflow_dispatch:
   schedule:
-    - cron: '34 5 * * 1'
+    - cron: '58 4 * * 1'
 
 env:
   SLACK_NOTIFY: true
