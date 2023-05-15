@@ -1,6 +1,10 @@
-name: Stale issue/pr handler
+name: Create Release Notes
 
 on:
+  push:
+    tags:
+      - 'v*'
+      - '!v*-rc.*'
   workflow_dispatch:
     inputs:
       slack-notify:
@@ -11,22 +15,20 @@ on:
         options:
           - 'true'
           - 'false'
-
-  schedule:
-    - cron: '13 3 * * *'
-
+          
 env:
-  SLACK_NOTIFY: false
+  SLACK_NOTIFY: true
 
 permissions: read-all
 
 jobs:
-  handle-stale-entries:
-    name: Handle stale Issues & PRs (Local)
+  create-release:
+    name: Create Release
     permissions:
-      issues: write
-      pull-requests: write
-    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-handle-stale.yml@master
+      contents: write  
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-generate-release.yml@master
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
 
   set-slack-notify:
     name: Set Slack Notify
@@ -43,7 +45,7 @@ jobs:
     if: always()
     name: Slack (Local)
     needs:
-      - handle-stale-entries
+      - create-release
       - set-slack-notify
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:

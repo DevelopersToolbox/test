@@ -14,16 +14,3 @@ updates:
       - "dependabot: ecosystem : github actions"
       - "dependabot: dependencies"
 
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "04:00"
-      timezone: "UTC"
-    open-pull-requests-limit: 25
-    commit-message:
-      prefix: "chore:"
-    labels:
-      - "dependabot: ecosystem : python"
-      - "dependabot: dependencies"
-
