@@ -24,9 +24,13 @@ env:
 permissions: read-all
 
 jobs:
-  bundler:
-    name: Bundler
-    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-bundler.yml@master
+  reek:
+    name: Reek
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-reek.yml@master
+
+  rubocop:
+    name: Rubocop
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-rubocop.yml@master
 
   set-slack-notify:
     name: Set Slack Notify
@@ -43,7 +47,8 @@ jobs:
     if: always() && ${{ github.actor != 'dependabot[bot]' }}
     name: Slack Post Workflow Notification
     needs:
-      - bundler
+      - reek
+      - rubocop
       - set-slack-notify
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-slack.yml@master
     with:
