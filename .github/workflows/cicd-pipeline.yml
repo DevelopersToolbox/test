@@ -44,37 +44,9 @@ jobs:
     name: Pylint
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pylint.yml@master
 
-  get-python-versions:
-    name: Get Python Versions
-    runs-on: ubuntu-latest
-    outputs:
-      version-matrix: ${{ steps.get-language-versions.outputs.latest-versions }}
-    steps:
-    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
-      id: get-language-versions
-      with:
-        language: "python"
-
-  pytest:
+  pylint:
     name: Pytest
-    needs: get-python-versions
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-versions: ${{ fromJson(needs.get-python-versions.outputs.version-matrix) }}
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      - name: Set up Python ${{ matrix.python-versions }}
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b # v4.6.0
-        with:
-          python-version: ${{ matrix.python-versions }}
-      - name: Install required packages
-        run: |
-          pip install -r requirements.txt
-      - name: Run Pytest
-        run: |
-         pytest --no-header -vv
+    uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pytest.yml@master
 
   set-slack-notify:
     name: Set Slack Notify
