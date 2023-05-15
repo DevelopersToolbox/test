@@ -27,14 +27,10 @@ jobs:
   bandit:
     name: Bandit
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-bandit.yml@master
-    with:
-      exclude-files: '\.md$'
 
   pycodestyle:
     name: Pycodestyle
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pycodestyle.yml@master
-        env:
-          EXCLUDE_FILES: '\.md$'
 
   pydocstyle:
     name: Pydocstyle
@@ -47,8 +43,6 @@ jobs:
   pylint:
     name: Pylint
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-pylint.yml@master
-    with:
-      exclude-files: '\.md$,setup.py'
 
   get-python-versions:
     name: Get Python Versions
