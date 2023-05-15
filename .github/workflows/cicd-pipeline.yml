@@ -36,7 +36,7 @@ jobs:
     outputs:
       version-matrix: ${{ steps.get-language-versions.outputs.latest-versions }}
     steps:
-    - uses: ActionsToolbox/get-language-versions-action@12914a844dfb5bfa53884aaa1f736f961325f113 # v0.1.0
+    - uses: ActionsToolbox/get-language-versions-action@9a98a01e87286f073bbee069547aeeea4ea30265 # v0.1.2
       id: get-language-versions
       with:
         language: "python"
