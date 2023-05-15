@@ -3,14 +3,10 @@ name: Delete old workflow runs
 on:
   workflow_dispatch:
     inputs:
-      days:
-        description: 'Number of day to keeps'
+      older-than-seconds:
+        description: 'Number of seconds'
         required: true
-        default: 30
-      minimum-runs:
-        description: 'The minimum runs to keep for each workflow.'
-        required: true
-        default: 6
+        default: '604800'
       slack-notify:
         description: 'Notify Slack'
         required: true
@@ -25,8 +21,7 @@ on:
 
 env:
   SLACK_NOTIFY: false
-  DAYS: 30
-  MINIMUM_RUNS: 6
+  OLDER_THAN_SECONDS: 604800
 
 permissions: read-all
 
@@ -35,14 +30,12 @@ jobs:
     name: Set Output Defaults
     runs-on: ubuntu-latest
     outputs:
-      days: ${{ steps.set-output-defaults.outputs.days }}
-      minimum-runs: ${{ steps.set-output-defaults.outputs.minimum-runs }}
+      older-than-seconds: ${{ steps.set-output-defaults.outputs.older-than-seconds }}
     steps:
       - name: set outputs with default values
         id: set-output-defaults
         run: |
-          echo "days=${{ github.event.inputs.days || env.DAYS }}" >> "${GITHUB_OUTPUT}"
-          echo "minimum-runs=${{ github.event.inputs.minimum-runs || env.MINIMUM_RUNS }}" >> "${GITHUB_OUTPUT}"
+          echo "older-than-seconds=${{ github.event.inputs.older-than-seconds || env.OLDER_THAN_SECONDS }}" >> "${GITHUB_OUTPUT}"
 
   delete-old-workflows:
     name: Delete old workflow runs (Local)
@@ -52,8 +45,7 @@ jobs:
       - set-output-defaults
     uses: WolfSoftware/reusable-workflows/.github/workflows/reusable-delete-old-runs.yml@master
     with:
-      days: ${{ needs.set-output-defaults.outputs.days }}
-      minimum-runs: ${{ needs.set-output-defaults.outputs.minimum-runs }}
+      older-than-seconds: ${{ needs.set-output-defaults.outputs.older-than-seconds }}
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
 
